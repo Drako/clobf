@@ -8,4 +8,3 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"
             :distribution :repo
             :comments "same as Closure"})
-

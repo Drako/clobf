@@ -9,29 +9,29 @@
 (defn inc-val
   "increment the value at ptr"
   [state]
-  (assoc-in state [:mem (:ptr state)] (inc (get-in state [:mem (:ptr state)]))))
+  (update-in state [:mem (:ptr state)] inc))
 
 (defn dec-val
   "decrement the value at ptr"
   [state]
-  (assoc-in state [:mem (:ptr state)] (dec (get-in state [:mem (:ptr state)]))))
+  (update-in state [:mem (:ptr state)] dec))
 
 (defn inc-ptr
   "increment ptr"
   [state]
-  (assoc state :ptr (mod (inc (:ptr state)) buffer-size)))
+  (update state :ptr #(mod (inc %) buffer-size)))
 
 (defn dec-ptr
   "increment ptr"
   [state]
-  (assoc state :ptr (mod (dec (:ptr state)) buffer-size)))
+  (update state :ptr #(mod (dec %) buffer-size)))
 
 (defn print-val
   "prints the value at ptr as ascii"
   [state]
   (do
-    (print (char (get-in state [:mem (:ptr state)]))))
-  state)
+    (print (char (get-in state [:mem (:ptr state)])))
+    state))
 
 (defn make-scope
   "creates a closure applying an entire scope on the state"
@@ -46,8 +46,7 @@
     #(loop [state %]
        (if (zero? (get-in state [:mem (:ptr state)]))
          state
-         (recur (scope state)))))
-  )
+         (recur (scope state))))))
 
 (defn read-char
   "reads a single character from java.io.Reader"
