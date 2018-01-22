@@ -29,9 +29,8 @@
 (defn print-val
   "prints the value at ptr as ascii"
   [state]
-  (do
-    (print (char (get-in state [:mem (:ptr state)])))
-    state))
+  (print (char (get-in state [:mem (:ptr state)])))
+  state)
 
 (defn make-scope
   "creates a closure applying an entire scope on the state"
@@ -74,4 +73,5 @@
   "entry point"
   [source-file]
   (with-open [stream (clojure.java.io/reader source-file)]
-    ((make-scope (make-ast stream)) initial-state)))
+    ((make-scope (make-ast stream)) initial-state))
+  (flush))
