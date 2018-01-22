@@ -76,17 +76,18 @@
   (loop [state initial-state cc (read-char stream)]
     (if (= cc -1)
       state
-      (recur
-        (case (char cc)
-          \+ (inc-val state)
-          \- (dec-val state)
-          \> (inc-ptr state)
-          \< (dec-ptr state)
-          \. (print-val state)
-          \[ ((make-loop (make-ast stream)) state)
-          \] (throw (IllegalStateException. "Unexpected closing bracket."))
-          state)
-        (read-char stream)))))
+      (if (= (char cc) \])
+        (throw (IllegalStateException. "Unexpected closing bracket."))
+        (recur
+          (case (char cc)
+            \+ (inc-val state)
+            \- (dec-val state)
+            \> (inc-ptr state)
+            \< (dec-ptr state)
+            \. (print-val state)
+            \[ ((make-loop (make-ast stream)) state)
+            state)
+          (read-char stream))))))
 
 (defn -main
   "entry point"
