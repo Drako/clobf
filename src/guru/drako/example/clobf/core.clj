@@ -56,22 +56,44 @@
   "creates an abstract syntax tree from a java.io.Reader"
   [stream]
   (loop [ast [] cc (read-char stream)]
-    (if (or (= cc -1) (= (char cc) \]))
-      ast
+    (if (= cc -1)
+      (throw (IllegalStateException. "Missing closing bracket."))
+      (if (= (char cc) \])
+        ast
+        (recur
+          (case (char cc)
+            \+ (conj ast inc-val)
+            \- (conj ast dec-val)
+            \> (conj ast inc-ptr)
+            \< (conj ast dec-ptr)
+            \. (conj ast print-val)
+            \[ (conj ast (make-loop (make-ast stream)))
+            ast)
+          (read-char stream))))))
+
+(defn interpret-file
+  [stream]
+  (loop [state initial-state cc (read-char stream)]
+    (if (= cc -1)
+      state
       (recur
         (case (char cc)
-          \+ (conj ast inc-val)
-          \- (conj ast dec-val)
-          \> (conj ast inc-ptr)
-          \< (conj ast dec-ptr)
-          \. (conj ast print-val)
-          \[ (conj ast (make-loop (make-ast stream)))
-          ast)
+          \+ (inc-val state)
+          \- (dec-val state)
+          \> (inc-ptr state)
+          \< (dec-ptr state)
+          \. (print-val state)
+          \[ ((make-loop (make-ast stream)) state)
+          \] (throw (IllegalStateException. "Unexpected closing bracket."))
+          state)
         (read-char stream)))))
 
 (defn -main
   "entry point"
   [source-file]
   (with-open [stream (clojure.java.io/reader source-file)]
-    ((make-scope (make-ast stream)) initial-state))
-  (flush))
+    (try
+      (interpret-file stream)
+      (catch IllegalStateException ex
+        (println "An error occurred: " (.getMessage ex))))
+    (flush)))
