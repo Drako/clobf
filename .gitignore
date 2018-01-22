@@ -1,0 +1,15 @@
+# build
+target/
+
+# idea
+*.iml
+.idea/inspectionProfiles/
+.idea/libraries/
+.idea/checkstyle-idea.xml
+.idea/ClojureProjectResolveSettings.xml
+.idea/compiler.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
+
