@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Leiningen: Uberjar" type="LeiningenRunConfiguration" factoryName="Leiningen" singleton="true">
+    <module name="clobf" />
+    <arguments argument="uberjar" />
+    <setting name="profiles" value="" />
+    <setting name="trampoline" value="false" />
+    <method />
+  </configuration>
+</component>

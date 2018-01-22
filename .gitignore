@@ -1,6 +1,10 @@
 # build
 target/
 
+# leiningen
+.lein-repl-history
+.nrepl-port
+
 # idea
 *.iml
 .idea/inspectionProfiles/
