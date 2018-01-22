@@ -4,7 +4,7 @@
 (def buffer-size 65536)
 (def initial-state
   {:ptr 0
-   :mem (apply vector (repeat buffer-size 0))})
+   :mem (vec (repeat buffer-size 0))})
 
 (defn inc-val
   "increment the value at ptr"
