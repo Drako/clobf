@@ -67,7 +67,7 @@
           \< (conj ast dec-ptr)
           \. (conj ast print-val)
           \[ (conj ast (make-loop (make-ast stream)))
-          :else ast)
+          ast)
         (read-char stream)))))
 
 (defn -main
