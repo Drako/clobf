@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Leiningen: Run (clt-2018.bf)" type="LeiningenRunConfiguration" factoryName="Leiningen">
+    <module name="clobf" />
+    <arguments argument="run" />
+    <arguments argument="clt-2018.bf" />
+    <setting name="profiles" value="" />
+    <setting name="trampoline" value="false" />
+    <method />
+  </configuration>
+</component>
